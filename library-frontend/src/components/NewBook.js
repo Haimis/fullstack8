@@ -6,7 +6,7 @@ import { ALL_AUTHORS, ALL_BOOKS, CREATE_BOOK } from '../queries'
 const NewBook = (props) => {
   const [title, setTitle] = useState('')
   const [author, setAuhtor] = useState('')
-  const [published, setPublished] = useState(null)
+  const [published, setPublished] = useState('')
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
   
@@ -23,9 +23,10 @@ const NewBook = (props) => {
 
   const submit = async (event) => {
     event.preventDefault()
-    
+
+    const num = (published === '') ? null : published
     createBook({
-      variables:{title, author, published, genres}
+      variables:{title, author, num, genres}
     })
 
     setTitle('')

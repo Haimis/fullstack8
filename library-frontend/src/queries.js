@@ -5,28 +5,40 @@ export const ALL_AUTHORS = gql`
     allAuthors {
       name
       born
-      bookCount
     }
   }
 `
+//      bookCount puuttuu
 
 export const ALL_BOOKS = gql`
   query {
     allBooks {
-        title
-      author
+      title
       published
     }
   }
 `
 
+// author ei toimi
+
 export const CREATE_BOOK = gql`
-  mutation createBook($title: String!, $author: String!, $published: Int, $genres: [String!]) {
+  mutation createBook($title: String!, $author: String!, $num: Int, $genres: [String!]) {
     addBook (
       title: $title
       author: $author
-      published: $published
+      published: $num
     	genres: $genres
+  	){
+    id
+   }
+  }
+`
+
+export const SET_BORN = gql`
+  mutation setBorn($name: String!, $num: Int!) {
+    editAuthor (
+      name: $name
+      setBornTo: $num
   	){
     id
    }
