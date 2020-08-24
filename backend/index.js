@@ -79,6 +79,9 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
+    me: (root, args, context) => {
+      return context.currentUser
+    },
     bookCount: () => Book.countDocuments(),
     authorCount: () => Author.countDocuments(),
     allBooks: (root, args) => {
@@ -132,6 +135,27 @@ const resolvers = {
           } catch (e) {
             throw new UserInputError(e.message)
           }
+      },
+      createUser: (root, args) => {
+        const user= new UserInputError({ username: args.username })
+        return user.save()
+          .catch(e => {
+            throw new UserInputError(e.message, {
+              invalidArgs: args,
+            })
+          })
+      },
+      login: async (root, args) => {
+        const user = await UserInputError.findOne({ username: args.username })
+        if ( !user || args.password !== 'passu' ) {
+          throw new UserInputError("wrong username or password")
+        }
+        const userForToken = {
+          username: user.username,
+          id: user._id
+        }
+
+        return { value: jwt.sign(userForToken, JWT_SECRET) }
       }
   }
 }
@@ -140,8 +164,15 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ req }) => {
-    if (0 === 0) {
-      return 'muista tehdä autentikointi'
+    const auth = req ? req.headers.authorization : null
+    if (auth && auth.toLowerCase().startsWith('bearer ')) {
+      const decodedToken = jwt.verify(
+        auth.substring(7), JWT_SECRET
+      )
+      const currentUser = await UserInputError.findById(decoadedToken.id)
+      return {
+        currentUser
+      }
     }
   }
 })
