@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 const Author = require('./models/author')
 const Book = require('./models/book')
+const author = require('./models/author')
 
 mongoose.set('useFindAndModify', false)
 
@@ -36,7 +37,7 @@ const typeDefs = gql`
       name: String!
       id: ID!
       born: Int
-      bookCount: Int
+      bookCount: Int!
   }
   type Query {
     bookCount: Int!
@@ -61,8 +62,8 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    bookCount: () => books.length,
-    authorCount: () => authors.length,
+    bookCount: () => Book.countDocuments(),
+    authorCount: () => Author.countDocuments(),
     allBooks: (root, args) => {
         let booksToReturn = Book.find({})
         if (args.author) {
@@ -76,9 +77,7 @@ const resolvers = {
     allAuthors: () => Author.find({})
   },
   Author: {
-      bookCount: (root) => {
-        return books.filter(b => b.author === root.name).length
-      }
+      bookCount: async (root) =>  await Book.find({ author: root.id }).countDocuments()
   },
   Mutation: {
       addBook: async (root, args) => {

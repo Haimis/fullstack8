@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/client'
 import { ALL_AUTHORS, ALL_BOOKS } from './queries'
 
 const App = () => {
+
   const [page, setPage] = useState('authors')
   const authors = useQuery(ALL_AUTHORS)
   const books = useQuery(ALL_BOOKS)

@@ -5,10 +5,10 @@ export const ALL_AUTHORS = gql`
     allAuthors {
       name
       born
+      bookCount
     }
   }
 `
-//      bookCount puuttuu
 
 export const ALL_BOOKS = gql`
   query {
