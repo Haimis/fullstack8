@@ -3,11 +3,12 @@ import React, { useState } from 'react'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
+import Notification from './components/Notification'
 import { useQuery } from '@apollo/client'
 import { ALL_AUTHORS, ALL_BOOKS } from './queries'
 
 const App = () => {
-
+  const [notification, setNotification] = useState('jeejee')
   const [page, setPage] = useState('authors')
   const authors = useQuery(ALL_AUTHORS)
   const books = useQuery(ALL_BOOKS)
@@ -28,6 +29,10 @@ const App = () => {
         <button onClick={() => setPage('add')}>add book</button>
       </div>
 
+      <Notification
+      notification={notification} setNotification={setNotification}
+      />
+
       <Authors
         show={page === 'authors'} authors={authors.data.allAuthors}
       />
@@ -37,7 +42,7 @@ const App = () => {
       />
 
       <NewBook
-        show={page === 'add'}
+        show={page === 'add'} setNotification={setNotification}
       />
 
     </div>
