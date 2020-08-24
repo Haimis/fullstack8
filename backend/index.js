@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 const Author = require('./models/author')
 const Book = require('./models/book')
-const author = require('./models/author')
+const User = require('./models/user')
 
 mongoose.set('useFindAndModify', false)
 
@@ -136,14 +136,17 @@ const resolvers = {
             throw new UserInputError(e.message)
           }
       },
-      createUser: (root, args) => {
-        const user= new UserInputError({ username: args.username })
-        return user.save()
-          .catch(e => {
-            throw new UserInputError(e.message, {
-              invalidArgs: args,
-            })
-          })
+      createUser: async (root, args) => {
+        console.log('tääl')
+        const user = new User({ username: args.username, favoriteGenre: args.favoriteGenre })
+        try {
+          console.log('koitetaan')
+          await user.save()
+        } catch (e) {
+          throw new UserInputError(e.message)
+        }
+        console.log('onnas', user)
+        return user
       },
       login: async (root, args) => {
         const user = await UserInputError.findOne({ username: args.username })

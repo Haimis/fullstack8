@@ -44,3 +44,21 @@ export const SET_BORN = gql`
    }
   }
 `
+export const CREATE_USER = gql`
+mutation createUser($username: String!, $favoriteGenre: String!) {
+  createUser (
+    username: $username
+    favoriteGenre: $favoriteGenre
+  ){username}
+}
+`
+export const LOGIN = gql`
+  mutation login($username: String!, $password: String!) {
+    login (
+      username: $username
+      password: $password
+  	){
+    Token
+   }
+  }
+`

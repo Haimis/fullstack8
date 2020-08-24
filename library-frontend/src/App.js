@@ -6,10 +6,11 @@ import NewBook from './components/NewBook'
 import Notification from './components/Notification'
 import { useQuery } from '@apollo/client'
 import { ALL_AUTHORS, ALL_BOOKS } from './queries'
+import Login from './components/Login'
 
 const App = () => {
   const [notification, setNotification] = useState(null)
-  const [page, setPage] = useState('authors')
+  const [page, setPage] = useState('login')
   const authors = useQuery(ALL_AUTHORS)
   const books = useQuery(ALL_BOOKS)
 
@@ -27,6 +28,7 @@ const App = () => {
         <button onClick={() => setPage('authors')}>authors</button>
         <button onClick={() => setPage('books')}>books</button>
         <button onClick={() => setPage('add')}>add book</button>
+        <button onClick={() => setPage('login')}>login</button>
       </div>
 
       <Notification
@@ -39,6 +41,10 @@ const App = () => {
 
       <Books
         show={page === 'books'} books={books.data.allBooks}
+      />
+
+      <Login
+      show={page === 'login'} setNotification={setNotification}
       />
 
       <NewBook
