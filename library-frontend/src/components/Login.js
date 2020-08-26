@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/client'
 
-import { CREATE_USER, LOGIN/*, ME*/ } from '../queries'
+import { CREATE_USER, LOGIN, ME } from '../queries'
 
 const Login = (props) => {
   const [username, setUsername] = useState('')
@@ -33,13 +33,12 @@ const Login = (props) => {
       },
     onCompleted: (response) => {
       props.setNotification(`succesfully logged in`)
+      console.log(response)
       setTimeout(() => {
         props.setNotification(null)
       }, 5000)
     }
   })
-
-  
 
   if (!props.show) {
     return null
