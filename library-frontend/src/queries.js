@@ -45,9 +45,9 @@ export const SET_BORN = gql`
   }
 `
 export const CREATE_USER = gql`
-mutation createUser($username: String!, $favoriteGenre: String!) {
+mutation createUser($newUsername: String!, $favoriteGenre: String!) {
   createUser (
-    username: $username
+    username: $newUsername
     favoriteGenre: $favoriteGenre
   ){username}
 }
@@ -58,7 +58,7 @@ export const LOGIN = gql`
       username: $username
       password: $password
   	){
-    Token
+    value
    }
   }
 `

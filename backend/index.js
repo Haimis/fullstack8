@@ -149,7 +149,7 @@ const resolvers = {
         return user
       },
       login: async (root, args) => {
-        const user = await UserInputError.findOne({ username: args.username })
+        const user = await User.findOne({ username: args.username })
         if ( !user || args.password !== 'passu' ) {
           throw new UserInputError("wrong username or password")
         }

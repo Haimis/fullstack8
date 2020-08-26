@@ -11,12 +11,35 @@ const Login = (props) => {
 
   const [ createNewUser ] = useMutation(CREATE_USER, {
     onError: (error) => {
-      props.setNotification(error.message)
+        props.setNotification(error.message)
+        setTimeout(() => {
+          props.setNotification(null)
+        }, 5000)
+      },
+    onCompleted: () => {
+      props.setNotification(`new user created`)
       setTimeout(() => {
         props.setNotification(null)
       }, 5000)
     }
   })
+
+  const [ logUserIn ] = useMutation(LOGIN, {
+    onError: (error) => {
+        props.setNotification(error.message)
+        setTimeout(() => {
+          props.setNotification(null)
+        }, 5000)
+      },
+    onCompleted: (response) => {
+      props.setNotification(`succesfully logged in`)
+      setTimeout(() => {
+        props.setNotification(null)
+      }, 5000)
+    }
+  })
+
+  
 
   if (!props.show) {
     return null
@@ -24,7 +47,15 @@ const Login = (props) => {
 
   const login = async (event) => {
     event.preventDefault()
-    console.log(username, password, 'jee')
+
+    logUserIn({
+        variables:{username, password}
+    })
+
+    setUsername('')
+    setPassword('')
+    setNewUsername('')
+    setFavoriteGenre('')
   }
 
   const createUser = async (event) => {
@@ -55,7 +86,8 @@ const Login = (props) => {
         <div>
           password
           <input
-            valie={password}
+            type="password"
+            value={password}
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
