@@ -5,8 +5,6 @@ const Books = (props) => {
     return null
   }
 
-  console.log(props.books)
-
   return (
     <div>
       <h2>books</h2>

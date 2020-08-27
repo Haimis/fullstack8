@@ -17,6 +17,13 @@ const NewBook = (props) => {
       setTimeout(() => {
         props.setNotification(null)
       }, 5000)
+    },
+    onCompleted: () => {
+      props.setNotification('Book succesfully added')
+      props.setPage('books')
+      setTimeout(() => {
+        props.setNotification(null)
+      }, 5000)
     }
   })
 

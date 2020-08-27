@@ -80,7 +80,6 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     me: (root, args, context) => {
-      console.log(context)
       return context.currentUser
     },
     bookCount: () => Book.countDocuments(),
@@ -145,7 +144,7 @@ const resolvers = {
         
         return book
       },
-      editAuthor: async (root, args,) => {
+      editAuthor: async (root, args, context) => {
         const currentUser = context.currentUser
 
         if (!currentUser) {
@@ -162,15 +161,12 @@ const resolvers = {
         }
       },
       createUser: async (root, args) => {
-        console.log('tääl')
         const user = new User({ username: args.username, favoriteGenre: args.favoriteGenre })
         try {
-          console.log('koitetaan')
           await user.save()
         } catch (e) {
           throw new UserInputError(e.message)
         }
-        console.log('onnas', user)
         return user
       },
       login: async (root, args) => {

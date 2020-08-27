@@ -8,7 +8,7 @@ const Authors = (props) => {
   const [ setBornTo ] = useMutation(SET_BORN, {
     refetchQueries: [ {query: ALL_AUTHORS} ],
     onError: (error) => {
-      console.log(error)
+      props.setNotification(error.message)
     }
   })
 

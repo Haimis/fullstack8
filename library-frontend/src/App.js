@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
@@ -22,6 +22,13 @@ const App = () => {
     client.resetStore()
     setPage('login')
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem('library-user-token')
+    if ( token ) {
+      setToken(token)
+    }
+  }, [])
 
   if(authors.loading || books.loading) {
     return (
@@ -47,7 +54,9 @@ const App = () => {
         />
 
         <Authors
-          show={page === 'authors'} authors={authors.data.allAuthors}
+          show={page === 'authors'}
+          authors={authors.data.allAuthors}
+          setNotification={setNotification}
         />
 
         <Books
@@ -56,6 +65,7 @@ const App = () => {
 
         <NewBook
           show={page === 'add'} setNotification={setNotification}
+          setPage={setPage}
         />
 
       </div>
@@ -76,6 +86,7 @@ const App = () => {
 
       <Authors
         show={page === 'authors'} authors={authors.data.allAuthors}
+        setNotification={setNotification}
       />
 
       <Books
@@ -83,11 +94,10 @@ const App = () => {
       />
 
       <Login
-      show={page === 'login'} setNotification={setNotification} setToken={setToken} setPage={setPage}
-      />
-
-      <NewBook
-        show={page === 'add'} setNotification={setNotification}
+      show={page === 'login'} 
+      setNotification={setNotification}
+      setToken={setToken}
+      setPage={setPage}
       />
 
     </div>

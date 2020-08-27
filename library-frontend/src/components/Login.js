@@ -34,6 +34,7 @@ const Login = (props) => {
     onCompleted: (response) => {
       props.setNotification(`succesfully logged in`)
       props.setToken(response.login.value)
+      localStorage.setItem('library-user-token', response.login.value)
       props.setPage('authors')
       setTimeout(() => {
         props.setNotification(null)
