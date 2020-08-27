@@ -14,12 +14,14 @@ export const ALL_BOOKS = gql`
   query {
     allBooks {
       title
+      author {
+        name
+      }
       published
     }
   }
 `
 
-// author ei toimi
 
 export const ME = gql`
 query {

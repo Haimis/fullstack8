@@ -33,7 +33,8 @@ const Login = (props) => {
       },
     onCompleted: (response) => {
       props.setNotification(`succesfully logged in`)
-      console.log(response)
+      props.setToken(response.login.value)
+      props.setPage('authors')
       setTimeout(() => {
         props.setNotification(null)
       }, 5000)

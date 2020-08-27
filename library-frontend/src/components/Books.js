@@ -5,6 +5,8 @@ const Books = (props) => {
     return null
   }
 
+  console.log(props.books)
+
   return (
     <div>
       <h2>books</h2>
@@ -23,7 +25,7 @@ const Books = (props) => {
           {props.books.map(a =>
             <tr key={a.title}>
               <td>{a.title}</td>
-              <td>{a.author}</td>
+              <td>{a.author.name}</td>
               <td>{a.published}</td>
             </tr>
           )}
