@@ -18,6 +18,7 @@ export const ALL_BOOKS = gql`
         name
       }
       published
+      genres
     }
   }
 `
@@ -26,7 +27,8 @@ export const ALL_BOOKS = gql`
 export const ME = gql`
 query {
   me {
-    User
+    username
+    favoriteGenre
   }
 }
 `

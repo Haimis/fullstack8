@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/client'
 
-import { CREATE_USER, LOGIN, ME } from '../queries'
+import { CREATE_USER, LOGIN } from '../queries'
 
 const Login = (props) => {
   const [username, setUsername] = useState('')
