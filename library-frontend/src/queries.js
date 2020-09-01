@@ -73,3 +73,20 @@ export const LOGIN = gql`
    }
   }
 `
+
+export const BOOK_ADDED = gql`
+  subscription {
+    bookAdded {
+      title
+      id
+    }
+  }
+`
+
+export const AUTHOR_ADDED= gql`
+  subscription {
+    authorAdded {
+      id
+    }
+  }
+`
